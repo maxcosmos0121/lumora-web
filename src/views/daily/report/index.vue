@@ -14,7 +14,7 @@
       <el-form-item label="星期" prop="week">
         <el-select v-model="queryParams.week" placeholder="星期" clearable style="width: 200px">
           <el-option
-              v-for="dict in week"
+              v-for="dict in week.value"
               :key="dict.value"
               :label="dict.label"
               :value="dict.value"
