@@ -157,6 +157,20 @@ export const dynamicRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
+  },
+  {
+    path: '/daily/report-edit',
+    component: Layout,
+    hidden: true,
+    permissions: ['daily:report:edit'],
+    children: [
+      {
+        path: 'index/:reportId(\\d+)',
+        component: () => import('@/views/daily/report/editReport'),
+        name: 'ReportEdit',
+        meta: { title: '编辑日报', activeMenu: '/daily/report' }
+      }
+    ]
   }
 ]
 

@@ -56,7 +56,8 @@
 
       <el-table-column label="操作" width="180" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:post:edit']">
+          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)"
+                     v-hasPermi="['daily:report:edit']">
             修改
           </el-button>
           <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
@@ -79,6 +80,7 @@
 
 <script setup name="Report">
 
+import router from "@/router";
 import {listReport, delReport} from "@/api/daily/report";
 
 const {proxy} = getCurrentInstance();
@@ -137,13 +139,18 @@ function getList() {
 
 /** 删除按钮操作 */
 function handleDelete(row) {
-  proxy.$modal.confirm('是否要删除当前日报').then(function() {
-    console.log( row)
+  proxy.$modal.confirm('是否要删除当前日报').then(function () {
+    console.log(row)
     return delReport(row.reportId);
   }).then(() => {
     getList();
     proxy.$modal.msgSuccess("删除成功");
-  }).catch(() => {});
+  }).catch(() => {
+  });
+}
+
+function handleUpdate(row) {
+  router.push({path: "/daily/report-edit/index/" + row.reportId});
 }
 
 getList();
