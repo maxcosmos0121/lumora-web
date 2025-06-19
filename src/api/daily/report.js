@@ -42,3 +42,12 @@ export function delReport(reportId) {
     method: 'delete'
   })
 }
+
+// 提交日常记录_每日日报
+export function submit(data) {
+  return request({
+    url: '/daily/report/submit',
+    method: 'post',
+    data: data
+  })
+}
