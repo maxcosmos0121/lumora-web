@@ -246,7 +246,7 @@ function getReportInfo(reportId) {
         <el-button
             type="primary"
             plain
-            @click="handleSubmit"
+            @click="handleSave"
         >保存
         </el-button>
         <el-button
