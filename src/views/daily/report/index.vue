@@ -14,7 +14,7 @@
       <el-form-item label="星期" prop="week">
         <el-select v-model="queryParams.week" placeholder="星期" clearable style="width: 200px">
           <el-option
-              v-for="dict in week.value"
+              v-for="dict in week"
               :key="dict.value"
               :label="dict.label"
               :value="dict.value"
@@ -28,19 +28,19 @@
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-            type="primary"
-            plain
-            icon="Plus"
-            @click="handleAdd"
-            v-hasPermi="['daily:report:add']"
-        >新增
-        </el-button>
-      </el-col>
-      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
+<!--    <el-row :gutter="10" class="mb8">-->
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--            type="primary"-->
+<!--            plain-->
+<!--            icon="Plus"-->
+<!--            @click="handleAdd"-->
+<!--            v-hasPermi="['daily:report:add']"-->
+<!--        >新增-->
+<!--        </el-button>-->
+<!--      </el-col>-->
+<!--      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>-->
+<!--    </el-row>-->
 
     <el-table v-loading="loading" :data="reportList">
       <el-table-column label="日期" align="center" prop="day"/>
@@ -57,12 +57,16 @@
       <el-table-column label="操作" width="180" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['daily:report:edit']">
+                     v-hasPermi="['daily:report:edit']" v-if="scope.row.reportStatus === 'N'">
             修改
           </el-button>
-          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['daily:report:remove']">删除
+          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)"
+                     v-hasPermi="['daily:report:edit']" v-if="scope.row.reportStatus === 'Y'">
+            查看
           </el-button>
+<!--          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"-->
+<!--                     v-hasPermi="['daily:report:remove']">删除-->
+<!--          </el-button>-->
         </template>
       </el-table-column>
     </el-table>

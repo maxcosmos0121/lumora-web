@@ -51,3 +51,12 @@ export function submit(data) {
     data: data
   })
 }
+
+// 保存日常记录_每日日报
+export function save(data) {
+  return request({
+    url: '/daily/report/save',
+    method: 'post',
+    data: data
+  })
+}

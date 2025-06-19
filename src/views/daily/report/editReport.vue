@@ -1,6 +1,6 @@
 <script setup>
 
-import {getReport, submit} from "@/api/daily/report";
+import {getReport, submit, save} from "@/api/daily/report";
 
 import useTagsViewStore from '@/store/modules/tagsView'
 
@@ -50,9 +50,27 @@ function handleSubmit() {
   console.log(form, 'form')
   submit(form).then(response => {
     const obj = {path: "/daily/report"};
-    proxy.$tab.closeOpenPage(obj);
     proxy.$router.go(-1);
+    proxy.$tab.closeOpenPage(obj);
+
   })
+}
+
+function handleSave() {
+  console.log(form, 'form')
+  save(form).then(response => {
+    const obj = {path: "/daily/report"};
+    proxy.$router.go(-1);
+    proxy.$tab.closeOpenPage(obj);
+
+  })
+}
+
+function handleCancel() {
+  const obj = {path: "/daily/report"};
+  proxy.$router.go(-1);
+  proxy.$tab.closeOpenPage(obj);
+
 }
 
 function handleDelete(index) {
@@ -207,6 +225,12 @@ function getReportInfo(reportId) {
       </el-col>
 
       <el-row justify="end" style="margin-top: 20px">
+        <el-button
+            type="primary"
+            plain
+            @click="handleCancel"
+        >取消
+        </el-button>
         <el-button
             type="primary"
             plain
