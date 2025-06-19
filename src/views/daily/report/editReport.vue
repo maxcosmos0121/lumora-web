@@ -238,7 +238,7 @@ function getReportInfo(reportId) {
 
       <el-row justify="end" style="margin-top: 20px" v-if="type === 'edit'">
         <el-button
-            type="primary"
+            type="warning"
             plain
             @click="handleCancel"
         >取消
