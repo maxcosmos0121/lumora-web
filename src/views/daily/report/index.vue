@@ -28,19 +28,19 @@
       </el-form-item>
     </el-form>
 
-<!--    <el-row :gutter="10" class="mb8">-->
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--            type="primary"-->
-<!--            plain-->
-<!--            icon="Plus"-->
-<!--            @click="handleAdd"-->
-<!--            v-hasPermi="['daily:report:add']"-->
-<!--        >新增-->
-<!--        </el-button>-->
-<!--      </el-col>-->
-<!--      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>-->
-<!--    </el-row>-->
+    <!--    <el-row :gutter="10" class="mb8">-->
+    <!--      <el-col :span="1.5">-->
+    <!--        <el-button-->
+    <!--            type="primary"-->
+    <!--            plain-->
+    <!--            icon="Plus"-->
+    <!--            @click="handleAdd"-->
+    <!--            v-hasPermi="['daily:report:add']"-->
+    <!--        >新增-->
+    <!--        </el-button>-->
+    <!--      </el-col>-->
+    <!--      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>-->
+    <!--    </el-row>-->
 
     <el-table v-loading="loading" :data="reportList">
       <el-table-column label="日期" align="center" prop="day"/>
@@ -60,13 +60,13 @@
                      v-hasPermi="['daily:report:edit']" v-if="scope.row.reportStatus === 'N'">
             修改
           </el-button>
-          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['daily:report:edit']" v-if="scope.row.reportStatus === 'Y'">
+          <el-button link type="primary" icon="Edit" @click="handleInfo(scope.row)"
+                     v-hasPermi="['daily:report:query']" v-if="scope.row.reportStatus === 'Y'">
             查看
           </el-button>
-<!--          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"-->
-<!--                     v-hasPermi="['daily:report:remove']">删除-->
-<!--          </el-button>-->
+          <!--          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)"-->
+          <!--                     v-hasPermi="['daily:report:remove']">删除-->
+          <!--          </el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -154,7 +154,11 @@ function handleDelete(row) {
 }
 
 function handleUpdate(row) {
-  router.push({path: "/daily/report-edit/index/" + row.reportId});
+  router.push({ path: "/daily/report-edit/index/" + row.reportId, query: { type: 'edit' } });
+}
+
+function handleInfo(row) {
+  router.push({ path: "/daily/report-edit/index/" + row.reportId, query: { type: 'info' } });
 }
 
 getList();

@@ -2,12 +2,12 @@
 
 import {getReport, submit, save} from "@/api/daily/report";
 
-import useTagsViewStore from '@/store/modules/tagsView'
-
 import {ref, reactive, toRefs, getCurrentInstance} from 'vue';
 import {useDict} from '@/utils/dict';
 
 const route = useRoute();
+
+const type = ref('edit');
 
 const {proxy} = getCurrentInstance();
 const formRef = ref(null);
@@ -110,17 +110,26 @@ function getReportInfo(reportId) {
         status: 'add' // 默认新增状态
       });
     }
-    console.log('dailyReportContents after getReportInfo:', form.dailyReportContents);
   })
 
 }
 
 
 (() => {
+
+  type.value = route.query.type;
+
+  let obj = Object.assign({}, proxy.$route,
+      {title: type.value === 'edit' ? '修改日报' : '查看日报'}
+  )
+  proxy.$tab.updatePage(obj);
+
   const reportId = route.params && route.params.reportId;
   if (reportId) {
     getReportInfo(reportId)
   }
+
+
 })();
 
 </script>
@@ -154,22 +163,22 @@ function getReportInfo(reportId) {
         </el-col>
         <el-col :span="5">
           <el-form-item label="城市" prop="city">
-            <el-input v-model="form.dailyReport.city" placeholder="请输入城市"/>
+            <el-input v-model="form.dailyReport.city" placeholder="请输入城市" :disabled="type !== 'edit'"/>
           </el-form-item>
         </el-col>
         <el-col :span="5">
           <el-form-item label="天气" prop="weather">
-            <el-input v-model="form.dailyReport.weather" placeholder="请输入天气"/>
+            <el-input v-model="form.dailyReport.weather" placeholder="请输入天气" :disabled="type !== 'edit'"/>
           </el-form-item>
         </el-col>
         <el-col :span="5">
           <el-form-item label="心情" prop="mood">
-            <el-input v-model="form.dailyReport.mood" placeholder="请输入心情"/>
+            <el-input v-model="form.dailyReport.mood" placeholder="请输入心情" :disabled="type !== 'edit'"/>
           </el-form-item>
         </el-col>
       </el-row>
 
-      <el-row :gutter="10" class="mb8">
+      <el-row :gutter="10" class="mb8" v-if="type === 'edit'">
         <el-col :span="1.5">
           <el-button
               type="primary"
@@ -191,6 +200,7 @@ function getReportInfo(reportId) {
                   placeholder="请选择日报类型"
                   clearable
                   style="width: 200px"
+                  :disabled="type !== 'edit'"
               >
                 <el-option
                     v-for="dict in content_type"
@@ -205,6 +215,7 @@ function getReportInfo(reportId) {
                   plain
                   icon="Delete"
                   @click="handleDelete(index)"
+                  v-if="type === 'edit'"
               >
                 删除
               </el-button>
@@ -216,6 +227,7 @@ function getReportInfo(reportId) {
                   :rows="10"
                   type="textarea"
                   placeholder="请输入日报内容"
+                  :disabled="type !== 'edit'"
               />
             </el-row>
           </el-card>
@@ -224,7 +236,7 @@ function getReportInfo(reportId) {
 
       </el-col>
 
-      <el-row justify="end" style="margin-top: 20px">
+      <el-row justify="end" style="margin-top: 20px" v-if="type === 'edit'">
         <el-button
             type="primary"
             plain

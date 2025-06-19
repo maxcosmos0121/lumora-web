@@ -168,7 +168,7 @@ export const dynamicRoutes = [
         path: 'index/:reportId(\\d+)',
         component: () => import('@/views/daily/report/editReport'),
         name: 'ReportEdit',
-        meta: { title: '编辑日报', activeMenu: '/daily/report' }
+        meta: { title: '修改日报', activeMenu: '/daily/report' }
       }
     ]
   }
