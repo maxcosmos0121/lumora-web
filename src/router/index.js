@@ -172,20 +172,6 @@ export const dynamicRoutes = [
       }
     ]
   },
-  {
-    path: '/daily/expense-edit',
-    component: Layout,
-    hidden: true,
-    permissions: ['daily:expense:edit'],
-    children: [
-      {
-        path: 'index/:expenseId(\\d+)',
-        component: () => import('@/views/daily/expense/editExpense'),
-        name: 'ExpenseEdit',
-        meta: { title: '修改支出', activeMenu: '/daily/expense' }
-      }
-    ]
-  }
 ]
 
 const router = createRouter({
