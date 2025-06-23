@@ -86,6 +86,7 @@
 
 import router from "@/router";
 import {listReport, delReport} from "@/api/daily/report";
+import {onActivated} from "vue";
 
 const {proxy} = getCurrentInstance();
 const {week} = proxy.useDict("week");
@@ -154,12 +155,16 @@ function handleDelete(row) {
 }
 
 function handleUpdate(row) {
-  router.push({ path: "/daily/report-edit/index/" + row.reportId, query: { type: 'edit' } });
+  router.push({path: "/daily/report-edit/index/" + row.reportId, query: {type: 'edit'}});
 }
 
 function handleInfo(row) {
-  router.push({ path: "/daily/report-edit/index/" + row.reportId, query: { type: 'info' } });
+  router.push({path: "/daily/report-edit/index/" + row.reportId, query: {type: 'info'}});
 }
+
+onActivated(() => {
+  getList();
+});
 
 getList();
 </script>
